@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import Success from './components/Success';
 import Form from './components/Form';
-import './App.css'
+import Card from './components/Card';
+import './App.css';
 
 function App() {
   const [formInputs,setFormInputs] = useState(
@@ -20,6 +21,9 @@ function App() {
 
     return (
       <main>
+        <section className = "card-section">
+          <Card formInputs = {formInputs} updateCard = {updateCard}/>
+        </section>
         <section className = "form-section">
           {updateCard ? 
           <Success setFormInputs = {setFormInputs} setUpdateCard={setUpdateCard}/>
