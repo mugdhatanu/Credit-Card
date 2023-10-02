@@ -90,15 +90,16 @@ const Card = ({formInputs, updateCard}) => {
 }
 
 Card.propTypes = {
-  formInputs: PropTypes.exact({
-    holderName: PropTypes.string,
-    cardNumber: PropTypes.string,
-    expiryDate: PropTypes.exact({
-      month: PropTypes.string,
-      year: PropTypes.string
-    }) ,
-    cvc: PropTypes.string
-  }),
+  // formInputs: PropTypes.exact({
+  //   holderName: PropTypes.string,
+  //   cardNumber: PropTypes.string,
+  //   expiryDate: PropTypes.exact({
+  //     month: PropTypes.string,
+  //     year: PropTypes.string
+  //   }) ,
+  //   cvc: PropTypes.string
+  // }),
+  formInputs: PropTypes.object,
   updateCard: PropTypes.bool
 }
 

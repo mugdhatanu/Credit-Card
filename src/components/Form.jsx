@@ -28,7 +28,7 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
     const validateCardNumber = () => {
       const cardNumber = formInputs.cardNumber.replace(/\s/g, '');
       setFormInputs(prevInputs => ({...prevInputs, cardNumber}));
-      if(cardNumber.length === 0 || cardNumber.length !== 16 || isNaN(cardNumber)) {
+      if(cardNumber.length !== 16 || isNaN(cardNumber)) {
         setErrorMessage(prevMessage => ({...prevMessage, number: "Invalid card number"}));
         return false;
       }
@@ -49,11 +49,12 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
     const validateMonth = () => {
       const expiryDate = formInputs.expiryDate;
       const month = expiryDate.month;
-      if(month.length === 0 || month.length !== 2 || isNaN(month)) {
+      if(month.length !== 2 || isNaN(month)) {
         setErrorMessage(prevMessage => ({...prevMessage, expiry: {...prevMessage.expiry,month: "Invalid month"}}));
         return false;
       }
-      const monthRange = range(1,12);
+      const monthRange = [1,2,3,4,5,6,7,8,9,10,11,12];
+      // const monthRange = range(1,12);
       if(!monthRange.includes(parseInt(month))) {
         setErrorMessage(prevMessage => ({...prevMessage, expiry: {...prevMessage.expiry,month: "Invalid month"}}));
         return false;
@@ -65,7 +66,8 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
     const validateYear = () => {
       const expiryDate = formInputs.expiryDate;
       const year = expiryDate.year;
-      if(isNaN(year) || year.length !== 2) {
+      const digits = [2,4];
+      if(isNaN(year) || digits.includes(parseInt(year))) {
         setErrorMessage(prevMessage => ({...prevMessage, expiry: {...prevMessage.expiry,year: "Invalid year"}}));
         return false;
       }
@@ -73,14 +75,14 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
       return true;
     }
   
-    const range = (startIndex,endIndex) => {
-      if(endIndex) {
-        const rangeArr = [...Array(endIndex+1).keys()].filter((_,i) => i>= startIndex && i <= endIndex);
-        return rangeArr;
-      }
-      const range = startIndex;
-      return [...Array(range).keys()];
-    }
+    // const range = (startIndex,endIndex) => {
+    //   if(endIndex) {
+    //     const rangeArr = [...Array(endIndex+1).keys()].filter((_,i) => i>= startIndex);
+    //     return rangeArr;
+    //   }
+    //   const range = startIndex;
+    //   return [...Array(range+1).keys()].filter((_,i) => i!==0);
+    // }
   
     const validateCvc = () => {
       const cvc = formInputs.cvc;
@@ -169,7 +171,7 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
               <div className='cvc'>
                 <label htmlFor='cvc'>CVC</label>
                 <input 
-                  type="text" 
+                  type="password" 
                   placeholder = "e.g. 123" 
                   name="cvc" 
                   id="cvc" 
@@ -185,15 +187,16 @@ const Form = ({formInputs,setFormInputs,setUpdateCard}) => {
 }
 
 Form.propTypes = {
-  formInputs: PropTypes.exact({
-    holderName: PropTypes.string,
-    cardNumber: PropTypes.string,
-    expiryDate: PropTypes.exact({
-      month: PropTypes.string,
-      year: PropTypes.string
-    }),
-    cvc: PropTypes.string
-  }),
+  // formInputs: PropTypes.exact({
+  //   holderName: PropTypes.string,
+  //   cardNumber: PropTypes.string,
+  //   expiryDate: PropTypes.exact({
+  //     month: PropTypes.string,
+  //     year: PropTypes.string
+  //   }),
+  //   cvc: PropTypes.string
+  // }),
+  formInputs: PropTypes.object,
   setFormInputs: PropTypes.func,
   setUpdateCard: PropTypes.func
 }
